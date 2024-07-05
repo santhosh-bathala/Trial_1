@@ -1,0 +1,57 @@
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %}Customers{% endblock %}
+
+{% block body %}
+    <div class="content-section">
+      <div class="outer">
+        <div class="middle">
+          <div class="inner">
+            <br/>
+            {{ utils.flashed_messages() }}
+            <br/>
+            <h1 style="text-align:center;">Customer: {{ customer.name }} </h1>
+              <div style="text-align:center;" >
+                <a  href="{{ url_for('assign_loan', id=customer.id) }}" class="btn btn-default btn-lg">
+                    <i class="fa fa-plus"></i>
+                    Add New Loan
+                </a>
+              </div>
+                <hr class="intro-divider">
+                <div class="center">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="15%">Loan Number</th>
+                                <th width="15%">Loan Types</th>
+                                <th width="15%">Amount</th>
+                                <th width="15%">Rate of Interest %</th>
+                                <th width="15%">EMI's</th>
+                                <th width="15%" >Loan Date</th>
+                                <th width="15%">Payment Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for loan in loans %}
+                            <tr>
+                                <td>{{ loan.id }}</td>
+                                <td>{{ loan.loan_type }}</td>
+                                <td>{{ loan.loan_amount }}</td>
+                                <td>{{ loan.roi }}</td>
+                                <td>{{ loan.emi }}</td>
+                                <td>{{ loan.create_timestamp.date()}}</td>
+                                <td>
+                                    <a href="{{ url_for('payment_details', id=customer.id,
+                                    loan_type = loan.loan_type) }}"> Click</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
